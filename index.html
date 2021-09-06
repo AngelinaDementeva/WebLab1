@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Lab1</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel=”icon” href=”/favicon.ico” type=”img/x.png”>
+
+    <script type="text/javascript">
+
+        function ajaxRequest() {
+            try {
+                var request = new XMLHttpRequest()
+            }
+            catch (e1) {
+                try{
+                    request = new ActiveXObject("Msxml2.XMLHTTP")
+                }
+                catch (e2) {
+                    try {
+                        request = new ActiveXObject("Microsoft.XMLHTTP")
+                    }
+                    catch (e3) {
+                        request = false
+                    }
+                }
+            }
+            return request
+        }
+        function validate() {
+            var y = this.y.value;
+            var r = this.r.value;
+            y = y.replace(/,/, ".");
+            r = r.replace(/,/, ".");
+            if (y =="" || isNaN(y)) {document.getElementById("error").textContent = " должено быть число "; return false}
+            if (r=="" || isNaN(r)) {document.getElementById("error").textContent = " должено быть число "; return false}
+            else if (y<-5 || y>5 || r<1 || r>4){
+                document.getElementById("error").textContent = " число не входит в диапазон "; return false
+            }
+            else {
+                document.getElementById("div-result").style.display = "block";
+                document.getElementById("error").textContent = "";
+                return true;}
+        }
+        function check() {
+            request = new ajaxRequest();
+            ajaxY = document.querySelector("input[type=text]").value;
+            request.open("GET", "ajax.php?y=" + ajaxY, true);
+            request.onreadystatechange = function()
+            {
+                if (this.readyState == 4)
+                {
+                    if (this.status == 200)
+                    {
+                        if (this.responseText != null)
+                        {
+                            document.getElementById('error').textContent =
+                                this.responseText
+                        }
+                        else alert(" Ошибка AJAX: Данные не получены ")
+                    }
+                else alert( " Ошибка AJAX: " + this.statusText)
+                }
+            }
+            request.send(null)
+        }
+        function checkY() {
+            var y = document.querySelector("input[type=text]").value.replace(/,/, ".");
+            var test = /[^\d-,.]/.test(y);
+            if (test && y!==''){
+                document.getElementById("error").textContent = " Введены недопустимые символы "; return false;
+            }
+
+            if (y =="" || isNaN(y)) {document.getElementById("error").textContent = " Y должен быть числом "; return false}
+            else if (y<-5 || y>5){
+                document.getElementById("error").textContent = " Y должен находиться от -5 до 5 "; return false
+            }
+            else {
+                document.getElementById("error").textContent = "";
+                return true;}
+        }
+        function checkR() {
+            var r = document.querySelector("input[type=text]").value.replace(/,/, ".");
+            var test = /[^\d-,.]/.test(r);
+            if (test && r!==''){
+                document.getElementById("error").textContent = " Введены недопустимые символы "; return false;
+            }
+
+            if (r =="" || isNaN(r)) {document.getElementById("error").textContent = " Y должен быть числом "; return false}
+            else if (r<1 || r>4){
+                document.getElementById("error").textContent = " R должен находиться от 1 до 4 "; return false
+            }
+            else {
+                document.getElementById("error").textContent = "";
+                return true;}
+        }
+
+    </script>
+</head>
+<div class="header block">
+        <b><span class="header" class="classy">Дементьева Ангелина Олеговна P3232 <br> Вариант: 32003</span></b>
+</div>
+
+<div class="block info" >
+    <img src="img/pic.PNG" id="info-pic"></div>
+
+
+    <form action="work.php" method="get" target="result">
+        X:
+    <input type="radio" checked="checked" name="x" value="-5" id="1">-5
+    <input type="radio" name="x" value="-4" id="2">-4
+    <input type="radio" name="x" value="-3" id="3">-3
+    <input type="radio" name="x" value="-2" id="4">-2
+    <input type="radio" name="x" value="-1" id="5">-1
+    <input type="radio" name="x" value="0" id="6">0
+    <input type="radio" name="x" value="1" id="7">1
+    <input type="radio" name="x" value="2" id="8">2
+    <input type="radio" name="x" value="3" id="9">3
+    <br>
+     Y:
+    <input type="text"  placeholder="-5..5" name="y"  autocomplete="off">
+    <br>
+     R:
+    <input type="text"  placeholder="1..4" name="r" autocomplete="off">
+    <br>
+
+        <input type="submit" id="submit">
+    </form>
+    <br>
+    <span id="error"></span>
+<div align="center" class="block" id="div-result">
+    <iframe id="result" name="result" scrolling="no" frameborder="no" font-family = Arial ></iframe>
+</div>
+
+</span>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+    document.querySelector("form").onsubmit=validate;
+    let tmr;
+    document.querySelector("input[type=text]").onkeyup = function() {
+        clearTimeout(tmr);
+        tmr = setTimeout(check,1000);
+    };
+
+</script>
+</body>
+</html>

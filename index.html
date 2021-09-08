@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab 1</title>
+
+    <style type="text/css">
+        body {
+            background: #E0FFFF	;
+            font-family: Arial, serif;
+        }
+
+        #root p::first-line {
+            font-family: Arial, serif;
+            color: black;
+            font-size: 25px;
+        }
+
+        svg.chart {
+            display:block;
+            margin:18px;
+        }
+
+        svg.chart:hover {
+            margin: -30%;
+        }
+
+        form > div {
+            margin-bottom: 1%;
+        }
+
+        label, input, select {
+            font-family: Arial, serif;
+            margin-left: 0.5%;
+        }
+        .submit:hover {
+            background-color: black;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function sendData(f) {
+            if (isNaN(document.getElementById("yField").value) || document.getElementById("yField").value < -3 || document.getElementById("yField").value > 5) {
+                alert("Y инвалид");
+                return false;
+            }
+            else
+                f.submit();
+        }
+    </script>
+</head>
+<body>
+    <div id="root">
+        <b><span class="header" class="classy">Дементьева Ангелина Олеговна P3232 <br> Вариант: 32003</span></b>
+        <div>
+            <div class="with-svg">
+                <svg class="chart" viewBox="-200 -200 500 500" xmlns="http://www.w3.org/2000/svg" version="1.1"> <!--min-x, min-y, width, height-->                           <svg></svg>
+                    <!--Sample-->
+                    <defs>
+                        <marker id='arrow-head' orient="auto"
+                                markerWidth='2' markerHeight='4'
+                                refX='0.1' refY='2'>
+                            <!-- triangle pointing right (+x) -->
+                            <path d='M0,0 V4 L2,2 Z' fill="black"/>
+                        </marker>
+                    </defs>
+                    <!--Figures-->
+                    <polygon points="0 0, 0 80, -40 0" fill="rgb(0, 140, 203)"/>
+                    <rect x="0" y="-80" width="40" height="80" fill="rgb(0, 140, 203)"/>
+                    <path fill="rgb(0, 140, 203)" d="M 40,0 a 40 40, 0, 0, 1, -40 40 L 0 0 Z" />
+                    <path
+                            d="M -95 0, h 190"
+                            stroke="black"
+                            stroke-width="1"
+                            marker-end="url(#arrow-head)"
+                    />
+                    <path
+                            d="M 0 95, v -190"
+                            stroke="black"
+                            stroke-width="1"
+                            marker-end="url(#arrow-head)"
+                    />
+                    <!--Text-->
+                    <style>
+                        .inscription{
+                            font-size:5px;
+                            font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                            font-style: normal;
+                        }
+                    </style>
+                    <text x="90" y="-3" class="inscription">x</text>
+                    <text x="3" y="-90" class="inscription">y</text>
+                    <text x="40" y="-3" class="inscription">R/2</text>
+                    <text x="-45" y="-3" class="inscription">-R/2</text>
+                    <text x="3" y="40" class="inscription">-R/2</text>
+                    <text x="3" y="-40" class="inscription">R/2</text>
+                    <text x="80" y="-3" class="inscription">R</text>
+                    <text x="-85" y="-3" class="inscription">-R</text>
+                    <text x="3" y="80" class="inscription">-R</text>
+                    <text x="3" y="-75" class="inscription">R</text>
+                    <!--Points-->
+                    <circle cx="0" cy="0" r="1.5" fill="black"/>
+                    <circle cx="0" cy="40" r="1.5" fill="black"/>
+                    <circle cx="0" cy="-40" r="1.5" fill="black"/>
+                    <circle cx="40" cy="0" r="1.5" fill="black"/>
+                    <circle cx="-40" cy="0" r="1.5" fill="black"/>
+                    <circle cx="80" cy="0" r="1.5" fill="black"/>
+                    <circle cx="-80" cy="0" r="1.5" fill="black"/>
+                    <circle cx="0" cy="80" r="1.5" fill="black"/>
+                    <circle cx="0" cy="-80" r="1.5" fill="black"/>
+                </svg>
+            </div>
+            <form method="get" action="handler.php" onsubmit="return sendData(this);">
+                <div>
+                    X:
+                    <label>
+                        <input type="radio" checked="checked" name="x" value="-5" id="1">-5
+                        <input type="radio" name="x" value="-4" id="2">-4
+                        <input type="radio" name="x" value="-3" id="3">-3
+                        <input type="radio" name="x" value="-2" id="4">-2
+                        <input type="radio" name="x" value="-1" id="5">-1
+                        <input type="radio" name="x" value="0" id="6">0
+                        <input type="radio" name="x" value="1" id="7">1
+                        <input type="radio" name="x" value="2" id="8">2
+                        <input type="radio" name="x" value="3" id="9">3
+                    </label>
+                </div>
+                <div>
+                    Y: <label><input id="yField" type="text" placeholder="-5..5" name="y"  autocomplete="off" maxlength="4"></label>
+                </div>
+                <div>
+                    R: <label><input id="rField" type="text" placeholder="1..4" name="r"  autocomplete="off" maxlength="4"></label>
+                </div>
+                <div>
+                    <input class="submit" type="submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
